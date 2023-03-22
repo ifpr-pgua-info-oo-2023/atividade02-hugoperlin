@@ -16,6 +16,7 @@ public class JogoJokenpo {
             opcaoJogador = teclado.nextInt();
 
             opcaoComputador = rand.nextInt(3)+1;
+            
 
             if(opcaoJogador == opcaoComputador){
                 System.out.println("Empate!!!");
