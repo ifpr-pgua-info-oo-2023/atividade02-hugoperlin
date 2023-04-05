@@ -3,6 +3,32 @@ import java.util.Random;
 
 public class JogoJokenpo {
 
+    static final int PEDRA = 1;
+    static final int PAPEL = 2;
+    static final int TESOURA = 3;
+
+    static int contadorVitoriasJogador = 0;
+    static int contadorVitoriasComputador = 0;
+
+    static String verificarResultado(int opcaoJogador, int opcaoComputador){
+        if (opcaoJogador == opcaoComputador) {
+            return "Empate!!!";
+        } else if (opcaoJogador == PEDRA && opcaoComputador == TESOURA) {
+            contadorVitoriasJogador += 1;
+            return "Jogador Ganhou!!";
+        } else if (opcaoJogador == PAPEL && opcaoComputador == PEDRA) {
+            contadorVitoriasJogador += 1;
+            return "Jogador ganhou!!";
+        } else if (opcaoJogador == TESOURA && opcaoComputador == PAPEL) {
+            
+            contadorVitoriasJogador = contadorVitoriasJogador + 1;
+            return "Jogador ganhou!!";
+        } else {
+            contadorVitoriasComputador += 1;
+            return "Computador ganhou!!";
+        }
+    }
+
     public static void main(String[] args) {
 
         int opcaoJogador;
@@ -13,12 +39,8 @@ public class JogoJokenpo {
         int numeroRodadas;
         int contadorRodadas = 0;
 
-        int contadorVitoriasJogador = 0;
-        int contadorVitoriasComputador = 0;
-
-        int contPedraJogador = 0, contPedraComputador = 0;
-        int contPapelJogador = 0, contPapelComputador = 0;
-        int contTesouraJogador = 0, contTesouraComputador = 0;
+        int[] contOpcoesJogador = new int[3];
+        int[] contOpcoesComputador = new int[3];
 
 
 
@@ -35,50 +57,22 @@ public class JogoJokenpo {
             do {
                 System.out.println("Digite uma opção (1-pedra;2-papel;3-tesoura):");
                 opcaoJogador = teclado.nextInt();
-            } while (opcaoJogador != 1 && opcaoJogador != 2 && opcaoJogador != 3);
+            } while (opcaoJogador != PEDRA && opcaoJogador != PAPEL && opcaoJogador != TESOURA);
             // }while(opcaoJogador < 1 || opcaoJogador>3)
 
-            switch (opcaoJogador) {
-                case 1:
-                    contPedraJogador += 1;
-                    break;
-                case 2:
-                    contPapelJogador += 1;
-                    break;
-                case 3:
-                    contTesouraJogador += 1;
-                    break;
-            }
 
+            contOpcoesJogador[opcaoJogador-1] = 
+                          contOpcoesJogador[opcaoJogador-1] + 1;
+
+            //contOpcoesJogador[opcaoJogador-1] ++;
+            
             opcaoComputador = rand.nextInt(3) + 1;
 
-            switch (opcaoComputador) {
-                case 1:
-                    contPedraComputador += 1;
-                    break;
-                case 2:
-                    contPapelComputador += 1;
-                    break;
-                case 3:
-                    contTesouraComputador += 1;
-                    break;
-            }
+            contOpcoesComputador[opcaoComputador-1] +=1 ;
 
-            if (opcaoJogador == opcaoComputador) {
-                System.out.println("Empate!!!");
-            } else if (opcaoJogador == 1 && opcaoComputador == 3) {
-                System.out.println("Jogador Ganhou!!");
-                contadorVitoriasJogador += 1;
-            } else if (opcaoJogador == 2 && opcaoComputador == 1) {
-                System.out.println("Jogador ganhou!!");
-                contadorVitoriasJogador += 1;
-            } else if (opcaoJogador == 3 && opcaoComputador == 2) {
-                System.out.println("Jogador ganhou!!");
-                contadorVitoriasJogador = contadorVitoriasJogador + 1;
-            } else {
-                System.out.println("Computador ganhou!!");
-                contadorVitoriasComputador += 1;
-            }
+            String resultado = verificarResultado(opcaoJogador, opcaoComputador);
+
+            System.out.println(resultado);
 
             contadorRodadas += 1;
 
@@ -94,13 +88,13 @@ public class JogoJokenpo {
 
         System.out.println("Relatório de Escolhas:");
         System.out.println("Jogador:");
-        System.out.println("\tPedras:" + contPedraJogador +
-                " Papel: " + contPapelJogador +
-                " Tesoura: " + contTesouraJogador);
+        System.out.println("\tPedras:" + contOpcoesJogador[0] +
+                " Papel: " + contOpcoesJogador[1] +
+                " Tesoura: " + contOpcoesJogador[2]);
         System.out.println("Computador:");
-        System.out.println("\tPedras:" + contPedraComputador +
-                " Papel: " + contPapelComputador +
-                " Tesoura: " + contTesouraComputador);
+        System.out.println("\tPedras:" + contOpcoesComputador[0] +
+                " Papel: " + contOpcoesComputador[1] +
+                " Tesoura: " + contOpcoesComputador[2]);
 
     }
 
